@@ -37,5 +37,5 @@ endfunction
 
 " Public interface
 
-command! -range TipYankExport :call s:yankExport()
-command! TipPasteExport :call s:pasteExport()
+command! -range TsImpYankExport :call s:yankExport()
+command! TsImpPasteExport :call s:pasteExport()
