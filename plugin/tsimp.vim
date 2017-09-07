@@ -9,7 +9,7 @@ endfunction
 
 function! s:pasteExport()
 	let relativePath = s:getRelativePath(s:yankedExportAbsPath, expand("%:p"))
-	let @" = "import {" . s:yankedExport . "} from '" . relativePath "';"
+	let @" = "import {" . s:yankedExport . "} from '" . relativePath . "';"
 	normal! p
 endfunction
 
