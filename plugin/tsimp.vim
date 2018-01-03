@@ -1,9 +1,14 @@
 let s:yankedExport = "yankedExport"
 let s:yankedExportAbsPath = "yankedExportAbsPath"
 
-function! s:yankExport()
+function! s:yankSelectedExport()
     normal! gvy
     let s:yankedExport = @"
+    let s:yankedExportAbsPath = expand("%:p:r")
+endfunction
+
+function! s:yankcWORDExport()
+    let s:yankedExport = expand("<cWORD>")
     let s:yankedExportAbsPath = expand("%:p:r")
 endfunction
 
@@ -37,5 +42,8 @@ endfunction
 
 " Public interface
 
-command! -range TsImpYankExport :call s:yankExport()
+command! -range TsImpYankExport :call s:yankSelectedExport()
 command! TsImpPasteExport :call s:pasteExport()
+
+nnoremap <leader>yi :call <SID>yankcWORDExport()<CR>
+nnoremap <leader>pi :call <SID>pasteExport()<CR>
