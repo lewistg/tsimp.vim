@@ -1,21 +1,26 @@
 let s:yankedExport = "yankedExport"
 let s:yankedExportAbsPath = "yankedExportAbsPath"
 
-function! s:yankSelectedExport()
-    normal! gvy
-    let s:yankedExport = @"
-    let s:yankedExportAbsPath = expand("%:p:r")
-endfunction
-
 function! s:yankcWORDExport()
     let s:yankedExport = expand("<cWORD>")
     let s:yankedExportAbsPath = expand("%:p:r")
+    let @" = s:yankedExport 
+    nnoremap p :call <SID>pasteExport()<CR>
 endfunction
 
 function! s:pasteExport()
-	let relativePath = s:getRelativePath(s:yankedExportAbsPath, expand("%:p"))
-	let @" = "import {" . s:yankedExport . "} from '" . relativePath . "';"
-	pu
+    unmap p
+
+    if @" ==# s:yankedExport
+        echom "here"
+        let l:relativePath = s:getRelativePath(s:yankedExportAbsPath, expand("%:p"))
+        let @" = "import {" . s:yankedExport . "} from '" . relativePath . "';"
+        put "
+    else
+        normal! p
+    endif
+
+    let s:yankedExport = ""
 endfunction
 
 function! s:getRelativePath(toAbsPath, fromAbsPath)
@@ -42,4 +47,3 @@ endfunction
 
 " Public interface
 nnoremap <leader>yi :call <SID>yankcWORDExport()<CR>
-nnoremap <leader>pi :call <SID>pasteExport()<CR>
