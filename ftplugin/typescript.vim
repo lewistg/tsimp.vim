@@ -15,7 +15,7 @@ endfunction
 function! s:pasteExport()
 	let relativePath = s:getRelativePath(s:yankedExportAbsPath, expand("%:p"))
 	let @" = "import {" . s:yankedExport . "} from '" . relativePath . "';"
-	normal! p
+	pu
 endfunction
 
 function! s:getRelativePath(toAbsPath, fromAbsPath)
@@ -41,9 +41,5 @@ function! s:getRelativePath(toAbsPath, fromAbsPath)
 endfunction
 
 " Public interface
-
-command! -range TsImpYankExport :call s:yankSelectedExport()
-command! TsImpPasteExport :call s:pasteExport()
-
 nnoremap <leader>yi :call <SID>yankcWORDExport()<CR>
 nnoremap <leader>pi :call <SID>pasteExport()<CR>
