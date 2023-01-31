@@ -98,8 +98,3 @@ function! s:GetRelativePath(from_abs_path, to_abs_path)
 
     return path_up_to_common_ancestor . path_down_to_file
 endfunction
-
-function! tsimp#SetUpFtPlugin() abort
-    nnoremap <expr><buffer> <leader>yi tsimp#YankcWORDExport()
-    command! -range TsImpPutImport :call tsimp#PutImport() | :call tsimp#ClearPutMapping()
-endfunction
